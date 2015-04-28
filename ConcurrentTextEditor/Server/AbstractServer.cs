@@ -12,7 +12,6 @@ namespace Server
 	{
 		protected readonly HttpListener listener;
 		protected readonly Func<HttpListenerRequest, string> getResponse;
-		protected Thread serveThread;
 
 		public AbstractServer(string prefix, Func<HttpListenerRequest, string> getResponse)
 		{
@@ -21,13 +20,27 @@ namespace Server
 			listener.Prefixes.Add(prefix);
 		}
 
-		protected abstract void Serve();
+		protected abstract void AcceptClient(HttpListenerContext context);
+
+		private async void Serve()
+		{
+			while (listener.IsListening)
+			{
+				try
+				{
+					var context = await listener.GetContextAsync();
+					AcceptClient(context);
+				}
+				catch (HttpListenerException)
+				{
+				}
+			}
+		}
 
 		public void Start()
 		{
 			listener.Start();
-			serveThread = new Thread(Serve);
-			serveThread.Start();
+			Serve();
 		}
 
 		protected void ProcessClient(HttpListenerContext context)
@@ -47,7 +60,6 @@ namespace Server
 
 		public void Stop()
 		{
-			serveThread.Abort();
 			listener.Stop();
 		}
 	}

@@ -14,13 +14,9 @@ namespace Server
 		{
 		}
 
-		override protected void Serve()
+		override protected void AcceptClient(HttpListenerContext context)
 		{
-			while (true)
-			{
-				var context = listener.GetContext();
-				new Task(() => ProcessClient(context)).Start();
-			}
+			new Task(() => ProcessClient(context)).Start();
 		}
 	}
 }

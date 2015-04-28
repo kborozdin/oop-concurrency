@@ -11,8 +11,11 @@ namespace Server
 	{
 		static void Main(string[] args)
 		{
-			var service = new TextEditorService((p, r) => new TaskBasedServer(p, r),
-				new[] { "abc", "def" });
+			var service = new TextEditorService(
+				(p, r) => new TaskBasedServer(p, r),
+				() => Console.ReadKey(),
+				s => Console.WriteLine(s),
+				new[] { "first", "second", "third" });
 			service.Run();
 		}
 	}

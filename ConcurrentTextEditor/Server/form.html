@@ -1,14 +1,33 @@
 <html>
+    <head>
+        <title>Concurrent Text Editor</title>
+        <style>
+            body {{
+                background-color: black;
+                color: limegreen;
+            }}
+            input {{
+                border: 1px solid;
+                background-color: black;
+                color: limegreen;
+            }}
+        </style>
+    </head>
     <body>
         <form method="post" action="/">
-            Word:
-            <input type="text" name="word">
-            Replace:
-            <input type="text" name="replace">
-            <br><br>
-            <input type="submit">
-            <br><br>
-            <b>{0}</b>
+            <p>
+                Word: 
+                <input type="text" name="word">
+                 :: 
+                Replace:
+                <input type="text" name="replace">
+                 :: 
+                <input type="submit" value="Send data">
+            </p>
+            <p>
+                Output: 
+                <b>{0}</b>
+            </p>
         </form>
     </body>
 </html>

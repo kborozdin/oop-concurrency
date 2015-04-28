@@ -14,21 +14,25 @@ namespace Server
 	{
 		private readonly SafeStorage storage;
 		private readonly AbstractServer server;
+		private readonly Action waiter;
+		private readonly Action<string> logger;
 
 		public TextEditorService(Func<string, Func<HttpListenerRequest, string>, AbstractServer> createServer,
-			string[] lines)
+			Action waiter, Action<string> logger, string[] lines)
 		{
 			storage = new SafeStorage(lines);
 			server = createServer("http://localhost:80/", GetResponse);
+			this.waiter = waiter;
+			this.logger = logger;
 		}
 
 		public void Run()
 		{
 			server.Start();
 
-			Console.WriteLine("Serving...");
-			Console.WriteLine("Press any key to exit");
-			Console.ReadKey();
+			logger("Serving...");
+			logger("Press any key to exit");
+			waiter();
 
 			server.Stop();
 		}

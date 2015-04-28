@@ -58,6 +58,10 @@
     <Compile Include="TestTaskBasedServer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConcurrentTextEditor\ConcurrentTextEditor.csproj">
+      <Project>{75dc81c7-ab8a-4c22-9fe6-82157cdf9e1f}</Project>
+      <Name>ConcurrentTextEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{e6d05295-1bf4-47fb-bcb5-0c5e9cb07f79}</Project>
       <Name>Server</Name>
